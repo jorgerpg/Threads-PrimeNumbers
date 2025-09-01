@@ -70,6 +70,12 @@ java -cp target/classes app.Main par data/Entrada01.txt out/primes_t5.txt 5
 java -cp target/classes app.Main par data/Entrada01.txt out/primes_t10.txt 10
 ```
 
+### Parallel version with arbitrary thread count
+
+```bash
+java -cp target/classes app.Main par data/Entrada01.txt out/primes_tN.txt N
+```
+
 Each run appends timing results to `out/results.csv`.
 
 ---
@@ -158,5 +164,10 @@ prime-verifier/
 ## 📝 Notes
 
 * Output prime numbers are written in the **same order** as in the input file.
-* Synchronization is implemented manually using `synchronized` and `wait/notify`, without advanced concurrency abstractions (ExecutorService, ForkJoinPool, BlockingQueue).
+* Parallelization uses **multiple threads with a shared index and lock**:
+
+  * Each thread picks the next number to process atomically,
+  * Synchronization is done via `ReentrantLock` on the shared index,
+  * No explicit task objects or blocking queues are used.
+* Sequential version runs in a single thread.
 * For reliable benchmarks, run on a machine with minimal background load.
