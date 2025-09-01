@@ -53,7 +53,7 @@ public class ParallelPrimeFinder {
                 while (true) {
                     int idx;
 
-                    // 🔒 Pega o índice de forma segura
+                    // Pega o índice de forma segura
                     indexLock.lock();
                     try {
                         // Se já processamos todos os números, a thread termina
@@ -64,7 +64,7 @@ public class ParallelPrimeFinder {
                         indexLock.unlock();
                     }
 
-                    // ⚡ Processamento paralelo: verifica se o número é primo
+                    //  Processamento paralelo: verifica se o número é primo
                     isPrime[idx] = PrimeUtils.isPrime(numbers.get(idx));
                 }
             });
